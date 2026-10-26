@@ -5,6 +5,11 @@ function route(string $route): string
     return rtrim(BASEURL, '/') . '/' . ltrim($route, '/');
 }
 
+function asset(string $target_dir): string
+{
+    return rtrim(BASEURL, '/') . '/public/' . ltrim($target_dir, '/');
+}
+
 function redirect(string $route, int $response_code = 301): void
 {
     http_response_code($response_code);
@@ -31,4 +36,18 @@ function include_component(string $name, ?array $data = null): void
 
     extract($data ?? [], EXTR_SKIP);
     require $path;
+}
+
+
+class Flush
+{
+    public static function start(): void
+    {
+        ob_start();
+    }
+
+    public static function end(): string
+    {
+        return ob_get_clean() ?: '';
+    }
 }
