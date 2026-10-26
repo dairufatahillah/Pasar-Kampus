@@ -1,85 +1,104 @@
 <?php
-require_once __DIR__ . '/../core/database.php';
+use Azolee\Validator\Validator;
 
 $message = '';
+$email = $_POST['email'] ?? '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email       = $_POST['email'] ?? '';
-    $password    = password_hash($_POST['password'] ?? '', PASSWORD_BCRYPT);
-    $role        = 'user'; 
 
+    $validation = Validator::make([
+        'email'     => 'bail|required|string|email|max:50',
+        'password'  => 'bail|required|string|min:8',
+    ], $_POST);
 
-    $name        = $_POST['name'] ?? '';
-    $phone       = $_POST['phone'] ?? '';
-    $campus      = $_POST['campus'] ?? '';
-    $subdistrict = $_POST['subdistrict'] ?? '';
-    $district    = $_POST['district'] ?? '';
-    $preferences = $_POST['preferences'] ?? '';
+    if ($validation->isFailed()) {
+        $error = implode(' ', parse_errors($validation));
+    } else {
+        $result = (object) $validation->validated();
 
-    global $pdo; 
+        $existingUser = executeQuery(
+            "SELECT user_id FROM users WHERE email = :email",
+            ["email" => $result->email],
+            'fetch'
+        );
 
-    try {
-        $pdo->beginTransaction();
+        if ($existingUser) {
+            $errors['email'] = 'Email sudah terdaftar.';
+            
+        } else {
+            $id = executeQuery(
+                "INSERT INTO users 
+                    (email, password, role) 
+                VALUES 
+                    (:email, :password, 'user')
+                RETURNING user_id",
+                [
+                    "email" => $result->email, 
+                    "password" => password_hash($result->password, PASSWORD_DEFAULT)
+                ],
+                "fetch"
+            );
 
-        $stmtUser = executeQuery("INSERT INTO users (email, password, role) VALUES (?, ?, ?) RETURNING user_id", [$email, $password, $role]);
-        $userId = fetchColumn($stmtUser)[0] ?? $stmtUser->fetchColumn();
-
-        executeQuery("INSERT INTO user_profiles (user_id, name, phone, campus, subdistrict, district, preferences) VALUES (?, ?, ?, ?, ?, ?, ?)", [
-            $userId,
-            $name,
-            $phone,
-            $campus,
-            $subdistrict,
-            $district,
-            $preferences
-        ]);
-
-        $pdo->commit();
-        header("Location: login.php?success=1");
-        exit;
-    } catch (Exception $e) {
-        $pdo->rollBack();
-        $message = "Registrasi gagal: " . $e->getMessage();
+            redirect("login", 302);
+        }
     }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
-    <title>Register - Pasar Kampus</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PasarKampus - Register</title>
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="<?= asset("css/auth.css") ?>">
 </head>
 
-<body>
-    <h2>Daftar Akun Pasar Kampus</h2>
-    <?php if ($message): ?><p style="color: red;"><?= $message ?></p><?php endif; ?>
+<body data-auth-page="register">
+    <main>
+        <header>
+            <h1>Daftar</h1>
+        </header>
 
-    <form action="register.php" method="POST">
-        <h3>Informasi Akun</h3>
-        <label>Email:</label><br>
-        <input type="email" name="email" required><br>
-        <label>Password:</label><br>
-        <input type="password" name="password" required><br><br>
+        <?php if ($message !== ''): ?>
+            <p role="alert"><?= esc($message) ?></p>
+        <?php endif; ?>
 
-        <h3>Biodata & Kampus</h3>
-        <label>Nama Lengkap:</label><br>
-        <input type="text" name="name" required><br>
-        <label>No Telepon:</label><br>
-        <input type="text" name="phone"><br>
-        <label>Asal Kampus (cth: POLINEMA):</label><br>
-        <input type="text" name="campus"><br>
-        <label>Kecamatan:</label><br>
-        <input type="text" name="subdistrict"><br>
-        <label>Kabupaten/Kota (District):</label><br>
-        <input type="text" name="district"><br>
-        <label>Preferensi Barang:</label><br>
-        <input type="text" name="preferences" placeholder="Buku, Elektronik, dll"><br><br>
+        <form id="regAuthForm" method="POST" action="<?= route('register') ?>">
+            <fieldset>
+                <legend>Registration details</legend>
 
-        <button type="submit">Daftar Sekarang</button>
-    </form>
-    <p>Sudah punya akun? <a href="login.php">Login disini</a></p>
+                <div>
+                    <label for="regEmail">Email</label>
+                    <input type="email" id="regEmail" name="email" placeholder="email@example.com" value="<?= esc($email) ?>" required>
+                </div>
+
+                <div>
+                    <label for="password">Password</label>
+                    <div data-password-wrap>
+                        <input type="password" id="password" name="password" minlength="8" placeholder="Password" required>
+                        <button type="button" id="password-toggle">
+                            <img src="<?= asset("img/eye-closed.jpg") ?>" alt="Toggle Password">
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div data-submit>
+                <button type="submit">Daftar</button>
+            </div>
+
+            <footer>
+                Sudah punya akun? <a href="<?= route("login") ?>">Masuk</a>
+            </footer>
+        </form>
+    </main>
+
+    <script src="<?= asset("js/auth.js") ?>"></script>
 </body>
-
 </html>

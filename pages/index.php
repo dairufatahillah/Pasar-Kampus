@@ -50,7 +50,7 @@
 
                     <!-- Center 3D Shopping Cart Image -->
                     <div class="lp-orbit-cart-holder" title="PasarKampus - Pusat Belanja Kebutuhan Mahasiswa">
-                        <img src="<?= asset("assets/img/cart-transparent.png") ?>"
+                        <img src="<?= asset("img/cart-transparent.png") ?>"
                                 alt="Keranjang Belanja PasarKampus" 
                                 class="lp-orbit-cart-img">
                     </div>
@@ -289,7 +289,7 @@
 
                         <!-- Center 3D Shopping Cart Image -->
                         <div class="lp-orbit-cart-holder" title="PasarKampus - Pusat Belanja Kebutuhan Mahasiswa">
-                            <img src="<?= asset("assets/img/cart-transparent.png") ?>" 
+                            <img src="<?= asset("img/cart-transparent.png") ?>" 
                                     alt="Keranjang Belanja PasarKampus" 
                                     class="lp-orbit-cart-img">
                         </div>
