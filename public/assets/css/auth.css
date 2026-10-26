@@ -34,18 +34,6 @@ header h1 {
 	letter-spacing: -0.3px;
 }
 
-form > p[role="alert"] {
-	background: #FEF2F2;
-	border: 1px solid #FECACA;
-	border-radius: 10px;
-	color: #B91C1C;
-	font-size: 13px;
-	font-weight: 600;
-	line-height: 1.5;
-	padding: 10px 14px;
-	margin: 0 0 16px;
-}
-
 form > fieldset {
 	border: 0;
 	margin: 0;

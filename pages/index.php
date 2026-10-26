@@ -529,7 +529,6 @@
 </main>
 
 <?php Flush::start() ?>
-<!-- Interactive Scripts -->
 <script>
     function toggleFaq(button) {
         const item = button.closest('.lp-faq-item');
@@ -555,6 +554,4 @@
 </script>
 <?php $script = Flush::end() ?>
 
-<?php include_component("footer", [
-    "script" => $script
-]); ?>
+<?php include_component("footer", compact("script")); ?>

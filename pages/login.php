@@ -2,19 +2,16 @@
 
 use Azolee\Validator\Validator;
 
-session_start();
-
-$error = '';
 $email = $_POST['email'] ?? '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $validation = Validator::make([
-        'email'     => 'bail|required|string|email|max:50',
-        'password'  => 'bail|required|string',
+        'email' => 'bail|required|string|email|max:50',
+        'password' => 'bail|required|string',
     ], $_POST);
 
     if ($validation->isFailed()) {
-        $error = implode(' ', parse_errors($validation));
+        flash('error', implode(' ', parse_errors($validation)));
     } else {
         $result = (object) $validation->validated();
 
@@ -29,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($user && password_verify($result->password, $user['password'])) {
             create_session($user);
             redirect("/", 302);
-        } else {
-            $error = "Email atau Password Salah!";
         }
+
+        flash('error', 'Email atau Password Salah!');
     }
 }
 ?>
@@ -46,17 +43,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= asset("css/auth.css") ?>">
+    <link rel="stylesheet" href="<?= asset("css/flasher.css") ?>">
 </head>
 
 <body data-auth-page="login">
+    <?php include_component('flasher'); ?>
+
     <main>
         <header>
             <h1>Masuk</h1>
         </header>
-
-        <?php if ($error !== ''): ?>
-            <p role="alert"><?= esc($error) ?></p>
-        <?php endif; ?>
 
         <form id="loginForm" method="POST" action="<?= route('login') ?>">
             <fieldset>
