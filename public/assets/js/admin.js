@@ -280,7 +280,6 @@ function switchAdminTab(tabName) {
             dashboard: 'Dashboard Analitik',
             users: 'Manajemen Pengguna (User)',
             barang: 'Manajemen Barang Katalog',
-            pengajuan: 'Monitoring Pengajuan Transaksi COD',
             report: 'Laporan Aduan Masuk',
             kategori: 'Manajemen Kategori Katalog'
         };
@@ -292,7 +291,6 @@ function switchAdminTab(tabName) {
     if (tabName === 'dashboard' || document.getElementById('statTotalBarang')) renderDashboardView();
     if (tabName === 'users' || document.getElementById('userTableBody')) renderUsersTable();
     if (tabName === 'barang' || document.getElementById('barangTableBody')) renderBarangTable();
-    if (tabName === 'pengajuan' || document.getElementById('pengajuanTableBody')) renderPengajuanTable();
     if (tabName === 'report' || document.getElementById('reportTableBody')) renderReportTable();
     if (tabName === 'kategori' || document.getElementById('kategoriTableBody')) renderKategoriTable();
 
