@@ -1,6 +1,6 @@
 <?php
 $session = get_session();
-$adminName = $session['name'] ?? 'Superadmin Pusat';
+$adminName = $session['name'] ?? 'Superadmin';
 $activeTab = 'kategori';
 ?>
 <!DOCTYPE html>
@@ -8,7 +8,7 @@ $activeTab = 'kategori';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen Kategori - Portal Superadmin Pasar Kampus</title>
+    <title>Kategori Katalog - Portal Superadmin Pasar Kampus</title>
     <!-- Google Fonts Inter & Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,22 +20,21 @@ $activeTab = 'kategori';
 <body class="admin-body">
 
     <!-- =========================================================
-         LAYOUT UTAMA ADMIN (Sidebar Sesuai Wireframe Layout Dashboard)
+         LAYOUT UTAMA ADMIN
          ========================================================= -->
     <div class="admin-layout">
 
         <!-- ---------------- SIDEBAR ADMIN ---------------- -->
         <aside id="adminSidebar" class="admin-sidebar">
             <div class="admin-sidebar-top">
-                <!-- POJOK KIRI ATAS: PROFILE -->
+                <!-- POJOK KIRI ATAS: PROFILE (Sesuai Screenshot 2026-11-12 111239.png) -->
                 <div class="admin-profile-box">
                     <div class="admin-profile-avatar-wrap">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200" alt="Avatar Admin" class="admin-profile-avatar">
-                        <span class="admin-profile-status-dot" title="Online Live Monitoring"></span>
+                        <img src="<?= asset('/images/04573efb612afe5bde19c3cfa3a9c746.jpg') ?>" alt="Avatar Admin" class="admin-profile-avatar">
                     </div>
                     <div class="admin-profile-info">
-                        <div class="admin-profile-name" title="Superadmin Pusat">Superadmin Pusat</div>
-                        <span class="admin-profile-role">Super Admin</span>
+                        <div class="admin-profile-name">Superadmin</div>
+                        <div class="admin-profile-email">admin@pasarkampus.ac.id</div>
                     </div>
                 </div>
 
@@ -99,58 +98,63 @@ $activeTab = 'kategori';
                     </button>
                     <div class="admin-breadcrumb">
                         <span>Portal Admin / </span>
-                        <strong id="adminCurrentBreadcrumb">Master Kategori</strong>
-                    </div>
-                </div>
-
-                <div class="admin-topbar-right">
-                    <div class="admin-live-indicator" title="Sistem memantau seluruh aktivitas website kampus">
-                        <span class="admin-pulse-dot"></span>
-                        <span>Live Monitoring Website</span>
+                        <strong id="adminCurrentBreadcrumb">Manajemen Kategori Katalog</strong>
                     </div>
                 </div>
             </header>
 
             <div class="admin-content-container">
 
-                <!-- NOTE SISTEM BANNER SESUAI SPESIFIKASI -->
-                <div class="admin-monitoring-banner">
-                    <div class="admin-monitoring-banner-left">
-                        <div>
-                            <h4>Sistem Pengawasan Pusat Pasar Kampus</h4>
-                            <p>Halaman ini memantau seluruh ekosistem website (UB, UM, UMM): katalog barang, riwayat pengajuan COD, serta integritas komunitas mahasiswa secara realtime.</p>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- =========================================================
-                     VIEW 6: KATEGORI (Master Kategori / Tag)
-                     (Sesuai Wireframe 'Screenshot 2026-10-29 120326.png')
+                     VIEW: KATEGORI (Sesuai Screenshot 2026-11-12 110942.png)
                      ========================================================= -->
                 <section id="view-kategori" class="admin-view-panel active">
-                    <div class="admin-page-header">
-                        <div class="admin-header-title-wrap">
-                            <span class="admin-endpoint-badge">[ GET /kategori ] - Halaman Daftar Kategori / Master Tag</span>
-                            <h1>Manajemen Kategori / Master Tag</h1>
-                            <p>Deskripsi: Kelola kategori bawaan untuk filter katalog.</p>
+                    
+                    <!-- Header Banner -->
+                    <div class="admin-page-banner">
+                        <div class="admin-page-banner-text">
+                            <h2>Manajemen Kategori Katalog</h2>
+                            <p>Kelola kategori bawaan untuk filter katalog</p>
                         </div>
-                        <!-- Tombol Tambah Kategori Sesuai Wireframe [+ Tambah] -->
-                        <button type="button" class="btn-admin-primary" onclick="openAddKategoriModal()">
-                            <span>+ Tambah Kategori</span>
+                        <button type="button" class="btn-top-banner-add" onclick="openAddKategoriModal()">
+                            + Tambah Kategori
                         </button>
                     </div>
 
-                    <!-- Table Sesuai Wireframe: ID | Nama Kategori | Jumlah Barang | Status | Aksi ([Edit][Del]) -->
-                    <div class="admin-table-card">
-                        <div class="admin-table-responsive">
-                            <table class="admin-table">
+                    <!-- White Card Container -->
+                    <div class="admin-card-below-banner">
+                        <!-- Toolbar Filter Row -->
+                        <div class="admin-filter-row-v2">
+                            <div class="admin-filter-group-v2">
+                                <div class="admin-filter-item-v2">
+                                    <label for="kategoriSearchInput">Cari data kategori</label>
+                                    <div class="admin-search-box-v2">
+                                        <span class="search-icon">🔍</span>
+                                        <input type="text" id="kategoriSearchInput" placeholder="Cari kategori" oninput="renderKategoriTable()">
+                                    </div>
+                                </div>
+                                <div class="admin-filter-item-v2">
+                                    <label for="kategoriFilterStatus">Filter Status</label>
+                                    <select id="kategoriFilterStatus" class="admin-select-v2" onchange="renderKategoriTable()">
+                                        <option value="all">Semua Status</option>
+                                        <option value="Aktif">Aktif</option>
+                                        <option value="Nonaktif">Nonaktif</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="admin-total-badge-v2" id="totalKategoriCount">Total: 15</div>
+                        </div>
+
+                        <!-- Table Kategori Sesuai Screenshot: ID | Nama Kategori | Jumlah Barang | Status | Aksi -->
+                        <div class="admin-table-container-v2">
+                            <table class="admin-table-v2">
                                 <thead>
                                     <tr>
                                         <th style="width: 70px;">ID</th>
-                                        <th>Nama Kategori & Deskripsi</th>
+                                        <th>Nama Kategori</th>
                                         <th>Jumlah Barang</th>
                                         <th>Status</th>
-                                        <th style="width: 170px;">Aksi</th>
+                                        <th style="width: 140px;">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody id="kategoriTableBody">
@@ -159,6 +163,21 @@ $activeTab = 'kategori';
                             </table>
                         </div>
                     </div>
+
+                    <!-- Pagination Footer Sesuai Screenshot -->
+                    <div class="admin-pagination-card-v2">
+                        <div>Menampilkan 1 - 10 dari 1.232 Barang</div>
+                        <div class="admin-pagination-pages-v2">
+                            <button type="button" class="page-btn-v2">&lt;</button>
+                            <button type="button" class="page-btn-v2 active">1</button>
+                            <button type="button" class="page-btn-v2">2</button>
+                            <button type="button" class="page-btn-v2">3</button>
+                            <button type="button" class="page-btn-v2">4</button>
+                            <button type="button" class="page-btn-v2">5</button>
+                            <button type="button" class="page-btn-v2">&gt;</button>
+                        </div>
+                    </div>
+
                 </section>
 
             </div>
@@ -166,47 +185,49 @@ $activeTab = 'kategori';
     </div>
 
     <!-- ====================================================================
-         MODALS (Kategori Management)
+         MODALS (Kategori Management Sesuai Screenshot 2026-11-12 113943.png)
          ==================================================================== -->
 
-    <!-- MODAL ADMIN FORM TAMBAH / EDIT KATEGORI -->
+    <!-- POP UP - Tambah kategori -->
     <div id="modalKategori" class="admin-modal-backdrop">
-        <div class="admin-modal-card">
-            <div class="admin-modal-header">
-                <div>
-                    <button type="button" class="admin-modal-back-btn" onclick="closeModal('modalKategori')">&lt; Kembali ke Daftar Kategori</button>
-                    <h2 id="kategoriModalTitle" class="admin-modal-title">TAMBAH KATEGORI BARU</h2>
-                </div>
-                <button type="button" class="admin-modal-close" onclick="closeModal('modalKategori')">&times;</button>
+        <div class="modal-v2-card" style="max-width: 440px;">
+            <div class="modal-v2-header">
+                <h3>Tambah Kategori Baru</h3>
+                <button type="button" class="modal-v2-close-btn" onclick="closeModal('modalKategori')">&times;</button>
             </div>
             <form id="kategoriForm" onsubmit="handleKategoriSubmit(event)">
                 <input type="hidden" id="kategoriId">
-                <div class="admin-modal-body">
-                    <div class="admin-form-group">
-                        <label class="admin-form-label">Nama Kategori <span class="req">*</span></label>
-                        <input type="text" id="kategoriNama" required class="admin-form-input" placeholder="Contoh: Perlengkapan Kos, Buku, Elektronik">
+                <div class="modal-v2-body">
+                    <div class="modal-v2-grid-row">
+                        <div class="modal-v2-grid-label"><span>Nama kategori</span> <span>:</span></div>
+                        <div class="modal-v2-grid-input-wrap">
+                            <input type="text" id="kategoriNama" required class="modal-v2-input" placeholder="Nama kategori...">
+                        </div>
                     </div>
-                    <div class="admin-form-group">
-                        <label class="admin-form-label">Keterangan / Deskripsi</label>
-                        <input type="text" id="kategoriDeskripsi" class="admin-form-input" placeholder="Deskripsi peruntukan kategori filter">
+                    <div class="modal-v2-grid-row">
+                        <div class="modal-v2-grid-label"><span>Keterangan</span> <span>:</span></div>
+                        <div class="modal-v2-grid-input-wrap">
+                            <input type="text" id="kategoriDeskripsi" class="modal-v2-input" placeholder="Keterangan...">
+                        </div>
                     </div>
-                    <div class="admin-form-group">
-                        <label class="admin-form-label">Status</label>
-                        <div class="admin-radio-group" style="flex-direction: row; gap: 20px;">
-                            <label class="admin-radio-label" style="flex: 1;">
+                    <div style="margin-bottom: 16px;">
+                        <div style="font-size: 13px; font-weight: 600; color: #1C3563; margin-bottom: 8px;">Status:</div>
+                        <div class="modal-v2-radio-row">
+                            <label class="modal-v2-radio-label">
                                 <input type="radio" name="kategoriStatus" value="Aktif" checked>
-                                <span>(o) <strong>Aktif</strong></span>
+                                <span>Aktif</span>
                             </label>
-                            <label class="admin-radio-label" style="flex: 1;">
+                            <label class="modal-v2-radio-label">
                                 <input type="radio" name="kategoriStatus" value="Nonaktif">
-                                <span>( ) <strong>Nonaktif</strong></span>
+                                <span>Nonaktif</span>
                             </label>
                         </div>
                     </div>
-                </div>
-                <div class="admin-modal-footer">
-                    <button type="button" class="btn-admin-secondary" onclick="closeModal('modalKategori')">[ Batal ]</button>
-                    <button type="submit" class="btn-admin-primary">[ Simpan Kategori ]</button>
+
+                    <div class="modal-v2-footer-center">
+                        <button type="button" class="btn-pill-gray" onclick="closeModal('modalKategori')">Batal</button>
+                        <button type="submit" class="btn-pill-navy">Simpan Kategori</button>
+                    </div>
                 </div>
             </form>
         </div>

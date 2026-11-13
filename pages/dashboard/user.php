@@ -1,6 +1,6 @@
 <?php
 $session = get_session();
-$adminName = $session['name'] ?? 'Superadmin Pusat';
+$adminName = $session['name'] ?? 'Superadmin';
 $activeTab = 'users';
 ?>
 <!DOCTYPE html>
@@ -20,22 +20,21 @@ $activeTab = 'users';
 <body class="admin-body">
 
     <!-- =========================================================
-         LAYOUT UTAMA ADMIN (Sidebar Sesuai Wireframe Layout Dashboard)
+         LAYOUT UTAMA ADMIN
          ========================================================= -->
     <div class="admin-layout">
 
         <!-- ---------------- SIDEBAR ADMIN ---------------- -->
         <aside id="adminSidebar" class="admin-sidebar">
             <div class="admin-sidebar-top">
-                <!-- POJOK KIRI ATAS: PROFILE -->
+                <!-- POJOK KIRI ATAS: PROFILE (Sesuai Screenshot 2026-11-12 111239.png) -->
                 <div class="admin-profile-box">
                     <div class="admin-profile-avatar-wrap">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200" alt="Avatar Admin" class="admin-profile-avatar">
-                        <span class="admin-profile-status-dot" title="Online Live Monitoring"></span>
+                        <img src="<?= asset('/images/04573efb612afe5bde19c3cfa3a9c746.jpg') ?>" alt="Avatar Admin" class="admin-profile-avatar">
                     </div>
                     <div class="admin-profile-info">
-                        <div class="admin-profile-name" title="Superadmin Pusat">Superadmin Pusat</div>
-                        <span class="admin-profile-role">Super Admin</span>
+                        <div class="admin-profile-name">Superadmin</div>
+                        <div class="admin-profile-email">admin@pasarkampus.ac.id</div>
                     </div>
                 </div>
 
@@ -99,80 +98,76 @@ $activeTab = 'users';
                     </button>
                     <div class="admin-breadcrumb">
                         <span>Portal Admin / </span>
-                        <strong id="adminCurrentBreadcrumb">Kelola Pengguna (User)</strong>
-                    </div>
-                </div>
-
-                <div class="admin-topbar-right">
-                    <div class="admin-live-indicator" title="Sistem memantau seluruh aktivitas website kampus">
-                        <span class="admin-pulse-dot"></span>
-                        <span>Live Monitoring Website</span>
+                        <strong id="adminCurrentBreadcrumb">Manajemen Pengguna (User)</strong>
                     </div>
                 </div>
             </header>
 
             <div class="admin-content-container">
 
-                <!-- NOTE SISTEM BANNER SESUAI SPESIFIKASI -->
-                <div class="admin-monitoring-banner">
-                    <div class="admin-monitoring-banner-left">
-                        <div>
-                            <h4>Sistem Pengawasan Pusat Pasar Kampus</h4>
-                            <p>Halaman ini memantau seluruh ekosistem website (UB, UM, UMM): katalog barang, riwayat pengajuan COD, serta integritas komunitas mahasiswa secara realtime.</p>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- =========================================================
-                     VIEW 2: CRUD ADMIN USER (Kelola User)
-                     (Sesuai Wireframe 'Screenshot 2026-10-29 114058.png')
+                     VIEW: KELOLA USER (Sesuai Screenshot 2026-11-12 110556.png)
                      ========================================================= -->
                 <section id="view-users" class="admin-view-panel active">
-                    <div class="admin-page-header">
-                        <div class="admin-header-title-wrap">
-                            <h1>Manajemen Pengguna (User)</h1>
-                            <p>Kelola data mahasiswa terdaftar, hak akses, serta penegakan sanksi di seluruh kampus</p>
+                    
+                    <!-- Header Banner Sesuai Screenshot 2026-11-12 110556.png -->
+                    <div class="admin-page-banner">
+                        <div class="admin-page-banner-text">
+                            <h2>Manajemen Pengguna (User)</h2>
+                            <p>Ringkasan aktivitas PasarKampus hari ini</p>
                         </div>
-                        <!-- Tombol Tambah Pengguna Sesuai Wireframe [+ Tambah] -->
-                        <button type="button" class="btn-admin-primary" onclick="openAddUserModal()">
-                            <span>+ Tambah Pengguna</span>
+                        <button type="button" class="btn-top-banner-add" onclick="openAddUserModal()">
+                            + Tambah User
                         </button>
                     </div>
 
-                    <!-- Filter Toolbar -->
-                    <div class="admin-table-card">
-                        <div class="admin-table-toolbar">
-                            <div class="admin-search-wrap">
-                                <span class="admin-search-icon">🔍</span>
-                                <input type="text" id="userSearchInput" class="admin-search-input" placeholder="Cari nama, NIM, atau ID..." oninput="renderUsersTable()">
+                    <!-- White Card Container -->
+                    <div class="admin-card-below-banner">
+                        <!-- Toolbar Filter Row -->
+                        <div class="admin-filter-row-v2">
+                            <div class="admin-filter-group-v2">
+                                <div class="admin-filter-item-v2">
+                                    <label for="userSearchInput">Cari data user</label>
+                                    <div class="admin-search-box-v2">
+                                        <span class="search-icon">🔍</span>
+                                        <input type="text" id="userSearchInput" placeholder="Cari Nama, atau NIM..." oninput="renderUsersTable()">
+                                    </div>
+                                </div>
+                                <div class="admin-filter-item-v2">
+                                    <label for="userFilterKampus">Filter Kampus Asal</label>
+                                    <select id="userFilterKampus" class="admin-select-v2" onchange="renderUsersTable()">
+                                        <option value="all">Semua kampus</option>
+                                        <option value="Universitas Brawijaya">Universitas Brawijaya</option>
+                                        <option value="Universitas Negeri Malang">Universitas Negeri Malang</option>
+                                        <option value="Politeknik Negeri Malang">Politeknik Negeri Malang</option>
+                                        <option value="Binus University">Binus University</option>
+                                        <option value="Universitas Merdeka Malang">Universitas Merdeka Malang</option>
+                                    </select>
+                                </div>
+                                <div class="admin-filter-item-v2">
+                                    <label for="userFilterStatus">Filter Status User</label>
+                                    <select id="userFilterStatus" class="admin-select-v2" onchange="renderUsersTable()">
+                                        <option value="all">Semua Status</option>
+                                        <option value="Aktif">Aktif</option>
+                                        <option value="Suspend">Suspend</option>
+                                        <option value="Banned">Banned</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="admin-toolbar-actions">
-                                <select id="userFilterKampus" class="admin-select-filter" onchange="renderUsersTable()">
-                                    <option value="all">Semua Kampus</option>
-                                    <option value="Brawijaya">Univ. Brawijaya (UB)</option>
-                                    <option value="Negeri Malang">Univ. Negeri Malang (UM)</option>
-                                    <option value="Muhammadiyah">Univ. Muhammadiyah Malang (UMM)</option>
-                                </select>
-                                <select id="userFilterStatus" class="admin-select-filter" onchange="renderUsersTable()">
-                                    <option value="all">Semua Status</option>
-                                    <option value="Aktif">Aktif</option>
-                                    <option value="Suspend">Suspend</option>
-                                    <option value="Banned">Banned</option>
-                                </select>
-                            </div>
+                            <div class="admin-total-badge-v2" id="totalUserCount">Total: 1945 User</div>
                         </div>
 
-                        <!-- User Table Sesuai Wireframe: ID | Nama Lengkap | NIM | Kampus | Status | Aksi -->
-                        <div class="admin-table-responsive">
-                            <table class="admin-table">
+                        <!-- User Table Sesuai Screenshot: ID | Nama Lengkap | NIM | Kampus | Status | Aksi -->
+                        <div class="admin-table-container-v2">
+                            <table class="admin-table-v2">
                                 <thead>
                                     <tr>
                                         <th style="width: 70px;">ID</th>
-                                        <th>Nama Lengkap & Email</th>
+                                        <th>Nama Lengkap</th>
                                         <th>NIM</th>
                                         <th>Kampus</th>
                                         <th>Status</th>
-                                        <th style="width: 190px;">Aksi</th>
+                                        <th style="width: 140px;">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody id="userTableBody">
@@ -181,6 +176,21 @@ $activeTab = 'users';
                             </table>
                         </div>
                     </div>
+
+                    <!-- Pagination Footer Sesuai Screenshot -->
+                    <div class="admin-pagination-card-v2">
+                        <div id="userPaginationLabel">Menampilkan 1 - 10 dari 1.945 user</div>
+                        <div class="admin-pagination-pages-v2">
+                            <button type="button" class="page-btn-v2">&lt;</button>
+                            <button type="button" class="page-btn-v2 active">1</button>
+                            <button type="button" class="page-btn-v2">2</button>
+                            <button type="button" class="page-btn-v2">3</button>
+                            <button type="button" class="page-btn-v2">4</button>
+                            <button type="button" class="page-btn-v2">5</button>
+                            <button type="button" class="page-btn-v2">&gt;</button>
+                        </div>
+                    </div>
+
                 </section>
 
             </div>
@@ -188,123 +198,133 @@ $activeTab = 'users';
     </div>
 
     <!-- ====================================================================
-         MODALS (Users Management)
+         MODALS (Users Management Sesuai Screenshot 2026-11-12 111455.png)
          ==================================================================== -->
 
-    <!-- 1. MODAL ADMIN FORM TAMBAH USER -->
+    <!-- 1. POP UP - Tambah user -->
     <div id="modalAddUser" class="admin-modal-backdrop">
-        <div class="admin-modal-card">
-            <div class="admin-modal-header">
-                <div>
-                    <button type="button" class="admin-modal-back-btn" onclick="closeModal('modalAddUser')">&lt; Kembali ke Daftar Pengguna</button>
-                    <h2 class="admin-modal-title">TAMBAH PENGGUNA BARU</h2>
-                </div>
-                <button type="button" class="admin-modal-close" onclick="closeModal('modalAddUser')">&times;</button>
+        <div class="modal-v2-card">
+            <div class="modal-v2-header">
+                <h3>Tambah Pengguna Baru</h3>
+                <button type="button" class="modal-v2-close-btn" onclick="closeModal('modalAddUser')">&times;</button>
             </div>
             <form id="addUserForm" onsubmit="handleAddUserSubmit(event)">
-                <div class="admin-modal-body">
-                    <div class="admin-form-group">
-                        <label class="admin-form-label">Nama Lengkap <span class="req">*</span></label>
-                        <input type="text" id="newUserName" required class="admin-form-input" placeholder="Masukkan nama lengkap mahasiswa">
-                    </div>
-                    <div class="admin-form-group">
-                        <label class="admin-form-label">NIM <span class="req">*</span></label>
-                        <input type="text" id="newUserNim" required class="admin-form-input" placeholder="Contoh: 2141720012">
-                    </div>
-                    <div class="admin-form-group">
-                        <label class="admin-form-label">Email Kampus <span class="req">*</span></label>
-                        <input type="email" id="newUserEmail" required class="admin-form-input" placeholder="Contoh: mahasiswa@student.ub.ac.id">
-                    </div>
-                    <div class="admin-form-group">
-                        <label class="admin-form-label">Asal Kampus</label>
-                        <select id="newUserKampus" class="admin-form-select">
-                            <option value="Universitas Brawijaya">Universitas Brawijaya (UB)</option>
-                            <option value="Universitas Negeri Malang">Universitas Negeri Malang (UM)</option>
-                            <option value="Univ. Muhammadiyah Malang">Univ. Muhammadiyah Malang (UMM)</option>
-                            <option value="Politeknik Negeri Malang">Politeknik Negeri Malang (POLINEMA)</option>
-                        </select>
-                    </div>
-                    <div class="admin-form-group">
-                        <label class="admin-form-label">Kata Sandi <span class="req">*</span></label>
-                        <input type="password" id="newUserPassword" required class="admin-form-input" placeholder="Minimal 6 karakter" value="password123">
-                    </div>
-                    <div class="admin-form-group">
-                        <label class="admin-form-label">Role Akun</label>
-                        <div class="admin-radio-group" style="flex-direction: row; gap: 20px;">
-                            <label class="admin-radio-label" style="flex: 1;">
-                                <input type="radio" name="newUserRole" value="Mahasiswa" checked>
-                                <span>Mahasiswa (Pengguna/Penjual)</span>
-                            </label>
-                            <label class="admin-radio-label" style="flex: 1;">
-                                <input type="radio" name="newUserRole" value="Admin">
-                                <span>Admin</span>
-                            </label>
+                <div class="modal-v2-body">
+                    <div class="modal-v2-grid-row">
+                        <div class="modal-v2-grid-label"><span>Nama Lengkap</span> <span>:</span></div>
+                        <div class="modal-v2-grid-input-wrap">
+                            <input type="text" id="newUserName" required class="modal-v2-input" placeholder="Isi nama lengkap...">
                         </div>
                     </div>
-                </div>
-                <div class="admin-modal-footer">
-                    <button type="button" class="btn-admin-secondary" onclick="closeModal('modalAddUser')">[ Batal ]</button>
-                    <button type="submit" class="btn-admin-primary">[ Simpan Pengguna ]</button>
+                    <div class="modal-v2-grid-row">
+                        <div class="modal-v2-grid-label"><span>NIM</span> <span>:</span></div>
+                        <div class="modal-v2-grid-input-wrap">
+                            <input type="text" id="newUserNim" required class="modal-v2-input" placeholder="Isi NIM...">
+                        </div>
+                    </div>
+                    <div class="modal-v2-grid-row">
+                        <div class="modal-v2-grid-label"><span>Email</span> <span>:</span></div>
+                        <div class="modal-v2-grid-input-wrap">
+                            <input type="email" id="newUserEmail" required class="modal-v2-input" placeholder="Isi Email...">
+                        </div>
+                    </div>
+                    <div class="modal-v2-grid-row">
+                        <div class="modal-v2-grid-label"><span>Kata Sandi</span> <span>:</span></div>
+                        <div class="modal-v2-grid-input-wrap">
+                            <input type="password" id="newUserPassword" required class="modal-v2-input" placeholder="Isi Kata sandi..." value="password123">
+                        </div>
+                    </div>
+                    <div class="modal-v2-grid-row">
+                        <div class="modal-v2-grid-label"><span>Asal Kampus</span> <span>:</span></div>
+                        <div class="modal-v2-grid-input-wrap">
+                            <select id="newUserKampus" class="modal-v2-select">
+                                <option value="" disabled selected>Pilih Kampus</option>
+                                <option value="Universitas Brawijaya">Universitas Brawijaya</option>
+                                <option value="Universitas Negeri Malang">Universitas Negeri Malang</option>
+                                <option value="Politeknik Negeri Malang">Politeknik Negeri Malang</option>
+                                <option value="Binus University">Binus University</option>
+                                <option value="Universitas Merdeka Malang">Universitas Merdeka Malang</option>
+                                <option value="Univ. Muhammadiyah Malang">Univ. Muhammadiyah Malang</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-v2-grid-row">
+                        <div class="modal-v2-grid-label"><span>Role Akun</span> <span>:</span></div>
+                        <div class="modal-v2-grid-input-wrap">
+                            <div class="modal-v2-radio-row">
+                                <label class="modal-v2-radio-label">
+                                    <input type="radio" name="newUserRole" value="Mahasiswa" checked>
+                                    <span>Mahasiswa</span>
+                                </label>
+                                <label class="modal-v2-radio-label">
+                                    <input type="radio" name="newUserRole" value="Admin">
+                                    <span>Admin</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-v2-footer-center">
+                        <button type="button" class="btn-pill-gray" onclick="closeModal('modalAddUser')">Batal</button>
+                        <button type="submit" class="btn-pill-navy">Simpan</button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- 2. MODAL ADMIN FORM EDIT STATUS USER -->
+    <!-- 2. POP UP - Edit status pengguna -->
     <div id="modalEditUser" class="admin-modal-backdrop">
-        <div class="admin-modal-card">
-            <div class="admin-modal-header">
-                <div>
-                    <button type="button" class="admin-modal-back-btn" onclick="closeModal('modalEditUser')">&lt; Kembali ke Daftar Pengguna</button>
-                    <h2 class="admin-modal-title">EDIT STATUS PENGGUNA</h2>
-                </div>
-                <button type="button" class="admin-modal-close" onclick="closeModal('modalEditUser')">&times;</button>
+        <div class="modal-v2-card">
+            <div class="modal-v2-header">
+                <h3>Edit Status Pengguna</h3>
+                <button type="button" class="modal-v2-close-btn" onclick="closeModal('modalEditUser')">&times;</button>
             </div>
             <form id="editUserForm" onsubmit="handleEditUserSubmit(event)">
                 <input type="hidden" id="editUserId">
-                <div class="admin-modal-body">
-                    <!-- Informasi Pengguna (Read Only) -->
-                    <div class="admin-info-box">
-                        <div class="admin-info-box-title">Informasi Pengguna</div>
-                        <div class="admin-info-row">
-                            <span class="admin-info-label">Nama Lengkap :</span>
-                            <span id="editUserNameView" class="admin-info-value">Budi Santoso (NIM: 2241...) - [Read Only]</span>
+                <div class="modal-v2-body">
+                    <!-- Informasi Pengguna Sesuai Screenshot -->
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px;">
+                        <div style="display: flex; align-items: center; gap: 10px; font-weight: 700; color: #0F172A; font-size: 14px;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#8B5CF6"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                            <span id="editUserNameView">Alfiansyah (NIM: 2422141241)</span>
                         </div>
-                        <div class="admin-info-row">
-                            <span class="admin-info-label">Asal Kampus :</span>
-                            <span id="editUserKampusView" class="admin-info-value">Universitas Negeri Malang - [Read Only]</span>
+                        <div style="display: flex; align-items: center; gap: 10px; font-weight: 700; color: #0F172A; font-size: 14px;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#F59E0B"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+                            <span id="editUserKampusView">Universitas Negeri Malang</span>
                         </div>
                     </div>
 
-                    <!-- Ubah Status -->
-                    <div class="admin-form-group">
-                        <label class="admin-form-label">Ubah Status</label>
-                        <div class="admin-radio-group">
-                            <label class="admin-radio-label">
+                    <!-- Status Akun -->
+                    <div style="margin-bottom: 16px;">
+                        <div style="font-size: 13.5px; font-weight: 600; color: #1C3563; margin-bottom: 10px;">Status Akun:</div>
+                        <div class="modal-v2-radio-row">
+                            <label class="modal-v2-radio-label">
                                 <input type="radio" name="editUserStatus" value="Aktif">
-                                <span>( ) <strong>Aktif</strong> - Akun dapat bertransaksi, pasang barang, dan COD normal</span>
+                                <span>Aktif</span>
                             </label>
-                            <label class="admin-radio-label">
+                            <label class="modal-v2-radio-label">
                                 <input type="radio" name="editUserStatus" value="Suspend">
-                                <span>(o) <strong>Suspend</strong> - Akun dibekukan sementara karena peringatan/pelanggaran</span>
+                                <span>Suspend</span>
                             </label>
-                            <label class="admin-radio-label">
+                            <label class="modal-v2-radio-label">
                                 <input type="radio" name="editUserStatus" value="Banned">
-                                <span>( ) <strong>Banned</strong> - Blokir permanen akun terkait tindakan penipuan</span>
+                                <span>Banned</span>
                             </label>
                         </div>
                     </div>
 
-                    <!-- Alasan Sanksi -->
-                    <div class="admin-form-group">
-                        <label class="admin-form-label">Alasan Sanksi</label>
-                        <textarea id="editUserSanksi" class="admin-form-textarea" placeholder="Tuliskan catatan alasan sanksi..."></textarea>
-                        <div class="admin-form-note">(Catatan ini akan dikirimkan ke email pengguna sebagai notifikasi resmi)</div>
+                    <!-- Alasan Sanksi / Catatan -->
+                    <div style="margin-bottom: 18px;">
+                        <div style="font-size: 13.5px; font-weight: 600; color: #1C3563; margin-bottom: 8px;">Alasan Sanksi / Catatan:</div>
+                        <input type="text" id="editUserSanksi" class="modal-v2-input" placeholder="Terbukti melanggar aturan hit-and-run 3x berturut-turut">
+                        <div style="font-size: 11px; color: #5A6E8C; margin-top: 5px;">Catatan ini akan dikirimkan ke email pengguna sebagai notifikasi.</div>
                     </div>
-                </div>
-                <div class="admin-modal-footer">
-                    <button type="button" class="btn-admin-secondary" onclick="closeModal('modalEditUser')">[ Batal ]</button>
-                    <button type="submit" class="btn-admin-primary">[ Simpan Perubahan ]</button>
+
+                    <div class="modal-v2-footer-center">
+                        <button type="button" class="btn-pill-gray" onclick="closeModal('modalEditUser')">Batal</button>
+                        <button type="submit" class="btn-pill-navy">Simpan Perubahan</button>
+                    </div>
                 </div>
             </form>
         </div>

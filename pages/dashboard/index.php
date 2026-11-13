@@ -27,15 +27,14 @@ $activeTab = 'dashboard';
         <!-- ---------------- SIDEBAR ADMIN ---------------- -->
         <aside id="adminSidebar" class="admin-sidebar">
             <div class="admin-sidebar-top">
-                <!-- POJOK KIRI ATAS: PROFILE (Sesuai Wireframe Layout Dashboard Admin) -->
+                <!-- POJOK KIRI ATAS: PROFILE (Sesuai Screenshot 2026-11-12 111239.png) -->
                 <div class="admin-profile-box">
                     <div class="admin-profile-avatar-wrap">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200" alt="Avatar Admin" class="admin-profile-avatar">
-                        <span class="admin-profile-status-dot" title="Online Live Monitoring"></span>
+                        <img src="<?= asset('/images/04573efb612afe5bde19c3cfa3a9c746.jpg') ?>" alt="Avatar Admin" class="admin-profile-avatar">
                     </div>
                     <div class="admin-profile-info">
-                        <div class="admin-profile-name" title="Superadmin Pusat">Superadmin Pusat</div>
-                        <span class="admin-profile-role">Super Admin</span>
+                        <div class="admin-profile-name">Superadmin</div>
+                        <div class="admin-profile-email">admin@pasarkampus.ac.id</div>
                     </div>
                 </div>
 
@@ -102,37 +101,13 @@ $activeTab = 'dashboard';
                         <strong id="adminCurrentBreadcrumb">Dashboard Analitik</strong>
                     </div>
                 </div>
-
-                <div class="admin-topbar-right">
-                    <div class="admin-live-indicator" title="Sistem memantau seluruh aktivitas website kampus">
-                        <span class="admin-pulse-dot"></span>
-                        <span>Live Monitoring Website</span>
-                    </div>
-                </div>
             </header>
 
             <div class="admin-content-container">
 
-                <!-- NOTE SISTEM BANNER SESUAI SPESIFIKASI -->
-                <div class="admin-monitoring-banner">
-                    <div class="admin-monitoring-banner-left">
-                        <div>
-                            <h4>Sistem Pengawasan Pusat Pasar Kampus</h4>
-                            <p>Halaman ini memantau seluruh ekosistem website (UB, UM, UMM): katalog barang, riwayat pengajuan COD, serta integritas komunitas mahasiswa secara realtime.</p>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- =========================================================
                      VIEW 1: DASHBOARD ANALITIK SUPERADMIN
                      ========================================================= -->
-                <section id="view-dashboard" class="admin-view-panel active">
-                    <div class="admin-page-header">
-                        <div class="admin-header-title-wrap">
-                            <h1>Dashboard Analitik Superadmin</h1>
-                            <p>Ringkasan metrik statistik dan persebaran pengguna aktif di seluruh kampus mitra</p>
-                        </div>
-                    </div>
 
                     <!-- 4 METRIC STAT CARDS (Sesuai Wireframe Dashboard admin) -->
                     <div class="admin-stats-grid">
