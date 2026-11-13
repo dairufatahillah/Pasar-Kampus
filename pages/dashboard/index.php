@@ -58,11 +58,6 @@ $activeTab = 'dashboard';
                             </a>
                         </li>
                         <li>
-                            <a href="<?= route('/dashboard/pengajuan.php') ?>" id="nav-pengajuan" class="admin-nav-link <?= $activeTab === 'pengajuan' ? 'active' : '' ?>">
-                                <span>Pengajuan</span>
-                            </a>
-                        </li>
-                        <li>
                             <a href="<?= route('/dashboard/report.php') ?>" id="nav-report" class="admin-nav-link <?= $activeTab === 'report' ? 'active' : '' ?>">
                                 <span>Report</span>
                                 <span id="sidebarReportBadge" class="admin-nav-badge">2</span>
