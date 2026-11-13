@@ -27,15 +27,14 @@ $activeTab = 'pengajuan';
         <!-- ---------------- SIDEBAR ADMIN ---------------- -->
         <aside id="adminSidebar" class="admin-sidebar">
             <div class="admin-sidebar-top">
-                <!-- POJOK KIRI ATAS: PROFILE -->
+                <!-- POJOK KIRI ATAS: PROFILE (Sesuai Screenshot 2026-11-12 111239.png) -->
                 <div class="admin-profile-box">
                     <div class="admin-profile-avatar-wrap">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200" alt="Avatar Admin" class="admin-profile-avatar">
-                        <span class="admin-profile-status-dot" title="Online Live Monitoring"></span>
+                        <img src="<?= asset('/images/04573efb612afe5bde19c3cfa3a9c746.jpg') ?>" alt="Avatar Admin" class="admin-profile-avatar">
                     </div>
                     <div class="admin-profile-info">
-                        <div class="admin-profile-name" title="Superadmin Pusat">Superadmin Pusat</div>
-                        <span class="admin-profile-role">Super Admin</span>
+                        <div class="admin-profile-name">Superadmin</div>
+                        <div class="admin-profile-email">admin@pasarkampus.ac.id</div>
                     </div>
                 </div>
 
