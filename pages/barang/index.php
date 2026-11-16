@@ -1379,9 +1379,9 @@ if (count($recommendations) < 4) {
                 <div class="pk-footer-col">
                     <h4>Dukungan</h4>
                     <ul class="pk-footer-links">
-                        <li><a href="#">Kebijakan</a></li>
-                        <li><a href="#">Panduan Keamanan COD</a></li>
-                        <li><a href="#">Syarat &amp; Ketentuan</a></li>
+                        <li><a href="<?= route('/kebijakan.php') ?>">Kebijakan</a></li>
+                        <li><a href="<?= route('/panduan-keamanan.php') ?>">Panduan Keamanan COD</a></li>
+                        <li><a href="<?= route('/syarat-ketentuan.php') ?>">Syarat &amp; Ketentuan</a></li>
                     </ul>
                 </div>
             </div>

@@ -796,9 +796,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (($_POST['action'] ?? '') === 'canc
                 <div class="lp-footer-col">
                     <h4>Dukungan</h4>
                     <ul class="lp-footer-links">
-                        <li><a href="#" onclick="alert('Kebijakan Privasi: Data kampus dan identitas mahasiswa dilindungi.'); return false;">Kebijakan</a></li>
-                        <li><a href="#" onclick="alert('Panduan COD: Selalu lakukan serah terima di area kampus yang ramai pada jam operasional kampus.'); return false;">Panduan Keamanan COD</a></li>
-                        <li><a href="#" onclick="alert('Syarat & Ketentuan PasarKampus: Hanya untuk barang legal & tidak melanggar hukum.'); return false;">Syarat &amp; Ketentuan</a></li>
+                        <li><a href="<?= route('/kebijakan.php') ?>">Kebijakan</a></li>
+                        <li><a href="<?= route('/panduan-keamanan.php') ?>">Panduan Keamanan COD</a></li>
+                        <li><a href="<?= route('/syarat-ketentuan.php') ?>">Syarat &amp; Ketentuan</a></li>
                     </ul>
                 </div>
             </div>
