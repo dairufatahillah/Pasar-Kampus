@@ -789,7 +789,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (($_POST['action'] ?? '') === 'canc
                     <ul class="lp-footer-links">
                         <li><a href="<?= route('/#faq') ?>">Pusat Bantuan</a></li>
                         <li><a href="<?= route('/#faq') ?>">FAQ</a></li>
-                        <li><a href="mailto:support@pasarkampus.id">Kontak Kami</a></li>
+                        <li><a href="<?= route('/kontak-kami.php') ?>">Kontak Kami</a></li>
                     </ul>
                 </div>
 

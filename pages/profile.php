@@ -577,9 +577,9 @@ $userPhone = $session['phone'] ?? '';
                 <div class="pk-footer-col">
                     <h4>Bantuan</h4>
                     <ul class="pk-footer-links">
-                        <li><a href="#">Pusat Bantuan</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="mailto:support@pasarkampus.id">Kontak Kami</a></li>
+                        <li><a href="<?= route('/#faq') ?>">Pusat Bantuan</a></li>
+                        <li><a href="<?= route('/#faq') ?>">FAQ</a></li>
+                        <li><a href="<?= route('/kontak-kami.php') ?>">Kontak Kami</a></li>
                     </ul>
                 </div>
                 <div class="pk-footer-col">

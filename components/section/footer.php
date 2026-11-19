@@ -64,9 +64,9 @@ $profileValue = static fn (string $value, string $fallback = '—'): string => $
                 <div class="lp-footer-col">
                     <h4>Bantuan</h4>
                     <ul class="lp-footer-links">
-                        <li><a href="#faq">Pusat Bantuan</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="mailto:support@pasarkampus.id">Kontak Kami</a></li>
+                        <li><a href="<?= route('/#faq') ?>">Pusat Bantuan</a></li>
+                        <li><a href="<?= route('/#faq') ?>">FAQ</a></li>
+                        <li><a href="<?= route('/kontak-kami.php') ?>">Kontak Kami</a></li>
                     </ul>
                 </div>
 
